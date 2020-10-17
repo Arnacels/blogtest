@@ -1,0 +1,31 @@
+{% extends "post/home.html" %}
+{% block content_right %}
+<div class="rightcolumn">
+    <div class="card">
+        <h2>{{post_list.first.blog.owner.username}}</h2>
+    </div>
+    <div class="card">
+    </div>
+    {%if user != post_list.first.blog.owner%}
+    <div class="card">
+        {%if user.is_authenticated%}
+            <h3>Follow Me</h3>
+            <p>Some text..</p>
+
+            <form method="post" action="{% url 'subscribe' %}">
+            {% csrf_token %}
+            {%if user not in post_list.first.blog.subscribers.all%}
+                <button type="submit" name="blog_id" value={{post_list.first.blog.id}}>subscribe</button>
+
+            {%else%}
+                <button type="submit" name="blog_id" value={{post_list.first.blog.id}}>unsubscribe</button>
+            {%endif%}
+                </form>
+            {%else%}
+            <h2>Please login</h2>
+            <a href="{%url 'login'%}">Login</a>
+        {%endif%}
+    </div>
+    {%endif%}
+</div>
+{% endblock %}

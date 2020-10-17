@@ -1,0 +1,117 @@
+.sidebar {
+    background: grey;
+    font-family: Arial;
+    padding: auto;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.button {
+    margin: 5px;
+
+}
+
+body {
+  font-family: Arial;
+  padding: 20px;
+  margin-left: 15%;
+  margin-right: 15%;
+  background: #f1f1f1;
+}
+
+/* Header/Blog Title */
+.header {
+  padding: 30px;
+  font-size: 40px;
+  text-align: center;
+  background: white;
+  background-image: url("/media/background/Hero-inPixio-Photo-Editor.jpg");
+  background-size: cover;
+  font-color: white;
+}
+
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {
+  float: left;
+  width: 74%;
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 24%;
+  padding-left: 20px;
+}
+
+/* Fake image */
+.fakeimg {
+  background-color: white;
+  padding: 20px;
+  position: relative;
+
+  min-height: 420px;
+}
+
+/* Add a card effect for articles */
+.card {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+
+}
+.footer-card {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.info {
+  float: left;
+  width: 33%;
+  position: relative;
+}
+.like{
+  outline-color: rgba(201, 76, 76, 0.3);
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Footer */
+.footer {
+  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.text {
+    text-align: justify;
+    position: relative;
+    margin: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.login {
+    float: left;
+    margin: 10% 33% 33% 33%;
+    padding: 5px;
+    border: 22px solid white;
+    border-radius: 12%;
+    text-align: center;
+
+}
+
+
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {
+    width: 100%;
+    padding: 0;
+  }
+}
+

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}My amazing blog{% endblock %}
+{% block content_left %}
+{% load static %}
+{% get_media_prefix as MEDIA_PREFIX %}
+{% for post in object_list %}
+<div class="card">
+    <div class="text">
+        <div class="title-theme">
+            <a href="{%url 'my_feed'%}">{{ post.title }}</a>
+        </div>
+        <div class="desc-theme">{{ post.description }} </div>
+        {%if post not in actions%}
+        <form method="post" action="{% url 'view' %}">
+        {% csrf_token %}
+            <button type="submit" name="post_id" value={{post.id}}>Viewed</button>
+        </form>
+        {%else%}
+        <p>Viewed</p>
+        {%endif%}
+        <a href="{%url 'blog' post.blog.owner.username %}">{{ post.blog.owner.username }}</a>
+    </div>
+</div>
+{% endfor %}
+{% if is_paginated%}
+    {% for page in paginator.page_range %}
+    <a href="?page={{ page }}">{{ page }}</a>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
