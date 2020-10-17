@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .tasks import send_mail
 
 
 class Blog(models.Model):
@@ -22,6 +23,12 @@ class Post(models.Model):
 
     def __str__(self):
         return 'Post ' + (self.blog.owner.username) + ' ' + self.date.__str__()
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        send_mail(self)
+        super().save(force_insert=False, force_update=False, using=None,
+                     update_fields=None)
 
     class Meta:
         ordering = ('-date',)
