@@ -10,7 +10,7 @@
             <a href="{%url 'my_feed'%}">{{ post.title }}</a>
         </div>
         <div class="desc-theme">{{ post.description }} </div>
-        {%if post not in actions%}
+        {%if user not in post.views.all%}
         <form method="post" action="{% url 'view' %}">
         {% csrf_token %}
             <button type="submit" name="post_id" value={{post.id}}>Viewed</button>

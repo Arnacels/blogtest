@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views import generic, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView
-from .models import Post, ActionPost, Blog
+from .models import Post, Blog
 
 
 # Create your views here.
@@ -19,12 +19,6 @@ class BlogDetail(HomePageView):
     """Feed page. Override context data for control button viewed.
     Extends class HomePage"""
     template_name = 'post/blog.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        post = self.get_queryset()
-        context['actions'] = [act.post for act in ActionPost.objects.filter(user=self.request.user, post__in=post)]
-        return context
 
     def get_queryset(self):
         return Post.objects.filter(blog__owner__username=self.kwargs.get('username'))
@@ -50,13 +44,13 @@ class FeedUserView(LoginRequiredMixin, BlogDetail,):
 
 
 class UpdateVisionView(LoginRequiredMixin, UpdateView):
-    model = ActionPost
+    model = Post
     login_url = '/accounts/login/'
     redirect_field_name = 'login'
 
     def post(self, request, *args, **kwargs):
         post = get_object_or_404(Post, id=request.POST.get('post_id'))
-        action = ActionPost.objects.get_or_create(post=post, user=request.user)
+        post.views.add(request.user)
         return HttpResponseRedirect(reverse('my_feed'))
 
     def get_success_url(self):
@@ -73,8 +67,9 @@ class SubscribeUnsubscribeView(LoginRequiredMixin, UpdateView):
         user = self.request.user
         if user in blog.subscribers.all():
             blog.subscribers.remove(user)
-            action = ActionPost.objects.filter(post__blog=blog, user=user)
-            action.delete()
+            posts = Post.objects.filter(blog=blog)
+            for post in posts:
+                post.views.remove(user)
         else:
             blog.subscribers.add(user)
         return HttpResponseRedirect(reverse('my_feed'))

@@ -18,15 +18,10 @@ class Post(models.Model):
     description = models.CharField(max_length=160)
     text = models.TextField(blank=True)
     date = models.DateTimeField(auto_now=True)
+    views = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
         return 'Post ' + (self.blog.owner.username) + ' ' + self.date.__str__()
 
     class Meta:
         ordering = ('-date',)
-
-
-class ActionPost(models.Model):
-    """User actions on a post"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='action_user')
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='action_post')
