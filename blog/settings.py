@@ -127,3 +127,4 @@ MEDIA_ROOT = Path.joinpath(STATIC_ROOT, 'media')
 
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_BROKER_URL = 'amqp://guest:guest@rabbit:5672/%2F'
