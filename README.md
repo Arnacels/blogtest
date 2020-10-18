@@ -1,4 +1,4 @@
-#Classic Django Blog
+# Classic Django Blog
 
 This is Django app that test.
 
