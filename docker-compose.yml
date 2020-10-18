@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+
+  celery:
+    build: .
+    command: celery worker --app=blog --loglevel=info
+    depends_on:
+      - web
+  
+  rabbit:
+    restart: always
+    image: "rabbitmq:3-management"
+    ports:
+      - "15672:15672"
