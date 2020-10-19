@@ -33,7 +33,7 @@ class PostDetail(generic.detail.DetailView):
         return Post.objects.filter(blog__owner__username=self.kwargs.get('username'), id=self.kwargs.get('pk'))
 
 
-class FeedUserView(LoginRequiredMixin, BlogDetail,):
+class FeedUserView(LoginRequiredMixin, BlogDetail, ):
     """User Feed. Extends LoginRequiredMixin and BlogDetail."""
     login_url = '/accounts/login/'
     redirect_field_name = 'login'
@@ -67,9 +67,7 @@ class SubscribeUnsubscribeView(LoginRequiredMixin, UpdateView):
         user = self.request.user
         if user in blog.subscribers.all():
             blog.subscribers.remove(user)
-            posts = Post.objects.filter(blog=blog)
-            for post in posts:
-                post.views.remove(user)
+            list(map(lambda post: post.views.remove(user), Post.objects.filter(blog=blog)))
         else:
             blog.subscribers.add(user)
         return HttpResponseRedirect(reverse('my_feed'))

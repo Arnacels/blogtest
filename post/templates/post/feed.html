@@ -7,7 +7,7 @@
 <div class="card">
     <div class="text">
         <div class="title-theme">
-            <a href="{%url 'my_feed'%}">{{ post.title }}</a>
+            <a href="{%url 'blog_detail' post.blog.owner.username post.id %}">{{ post.title }}</a>
         </div>
         <div class="desc-theme">{{ post.description }} </div>
         {%if user not in post.views.all%}
